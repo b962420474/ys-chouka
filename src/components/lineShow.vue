@@ -4,6 +4,7 @@
       <div class="icon">{{ item.name }}</div>
       <div class="progress-bar" :style="{
         width: getWidth(type, item.start_5count),
+        minWidth:'40px',
         'background-color': getColor(type, item.start_5count)
       }">
         <div class="tip">{{ item.start_5count + '抽' }}</div>
