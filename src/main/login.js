@@ -23,10 +23,10 @@ const createWindow = async (top) => {
     webPreferences: {
       contextIsolation: false,
       webSecurity: false,
-      nodeIntegration: true,
-    },
+      nodeIntegration: true
+    }
   })
-  let webContent = global.loginWindow.webContents;
+  let webContent = global.loginWindow.webContents
   // webContent.openDevTools()
   await recoverCookie(webContent, 'loginWindow')
   global.loginWindow.on('close', function () { clear(), global.loginWindow = null, webContent = null })
@@ -37,7 +37,6 @@ const createWindow = async (top) => {
 }
 const isLogin = (cookies) => {
   return cookies.filter(item => item.name === 'login_ticket').length > 0
-
 }
 const on = (webContent) => {
   webContent.on('did-navigate-in-page', async () => {
@@ -51,20 +50,20 @@ const on = (webContent) => {
         list.forEach(item => {
           webContent.executeJavaScript(`
           function injectHtml(nickname, url) {
-            console.log('123')
             let template = \`
             <div class="sub-title">
               <span>抽卡链接-$\{nickname\}</span>
             </div>
               <ul class="info-content">
                 <li>
-                  <span style="word-break: break-all; white-space: pre-wrap;">$\{url\}</span>
+                  <div style="word-break: break-all; white-space: pre-wrap;" id='text'></div>
                 </li>
               </ul>
             \`
             let div = document.createElement('div')
             div.innerHTML = template
             document.querySelector('.mhy-account-main-page.mhy-container-content').appendChild(div)
+            document.getElementById('text').innerText = url
           }
           `, true)
           webContent.executeJavaScript(`injectHtml('${item.nickname}','${item.url}')`, true)

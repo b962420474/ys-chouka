@@ -57,26 +57,51 @@ const upInfo = [
   new RangeData('2023-03-01 10:00:00', '2023-03-21 18:00:00', ['迪希雅', '赛诺']),
   new RangeData('2023-03-21 18:00:00', '2023-04-11 18:00:00', ['神里绫华', '申鹤']),
   new RangeData('2023-04-12 10:00:00', '2023-05-02 18:00:00', ['纳西妲', '妮露']),
-  new RangeData('2023-05-02 18:00:00', '2023-05-21 18:00:00', ['白术', '甘雨'])
+  new RangeData('2023-05-02 18:00:00', '2023-05-23 15:00:00', ['白术', '甘雨']),
+  new RangeData('2023-05-24 18:00:00', '2023-06-13 18:00:00', ['宵宫', '八重神子']),
+  new RangeData('2023-06-13 18:00:00', '2023-07-04 15:00:00', ['艾尔海森', '枫原万叶'])
 ]
 // const wqInfo = []
 const isInUp = (data, type) => {
+  // let bool = false
+  // if (type) {
+  //   const index = upInfo.findIndex(up => {
+  //     const startTime = new Date(up.startTime).getTime()
+  //     const endTime = new Date(up.endTime).getTime()
+  //     const t = new Date(data.time).getTime()
+  //     if (t <= endTime && t >= startTime) {
+  //       return true
+  //     }
+  //     return false
+  //   })
+  //   if (index > 0 && upInfo[index].isUp(data)) {
+  //     bool = true
+  //   }
+  // }
+  // return bool
+  return !isCZ(data,type)
+}
+const czList = {
+  '琴':'2020-09-28 08:00:00',
+  '迪卢克':'2020-09-28 08:00:00',
+  '七七':'2020-09-28 08:00:00',
+  '莫娜':'2020-09-28 08:00:00',
+  '刻晴':'2021-03-17 08:00:00',
+  '提纳里':'2022-09-28 08:00:00',
+  '迪希雅':'2023-04-12 08:00:00',
+}
+const isCZ = (data, type)=>{
   let bool = false
   if (type) {
-    const index = upInfo.findIndex(up => {
-      const startTime = new Date(up.startTime).getTime()
-      const endTime = new Date(up.endTime).getTime()
+    const v = czList[data.name]
+    if(v){
       const t = new Date(data.time).getTime()
-      if (t <= endTime && t >= startTime) {
-        return true
+      const t1 = new Date(v).getTime()
+      if(t>=t1){
+        bool = true
       }
-      return false
-    })
-    if (index > 0 && upInfo[index].isUp(data)) {
-      bool = true
     }
   }
   return bool
 }
-
 export { isInUp }
